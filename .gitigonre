@@ -1,5 +1,5 @@
-# Created by https://www.toptal.com/developers/gitignore/api/rust,c++
-# Edit at https://www.toptal.com/developers/gitignore?templates=rust,c++
+# Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,rust,c++
+# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,rust,c++
 
 ### C++ ###
 # Prerequisites
@@ -51,4 +51,23 @@ Cargo.lock
 # MSVC Windows builds of rustc generate these, which store debugging information
 *.pdb
 
-# End of https://www.toptal.com/developers/gitignore/api/rust,c++
+### VisualStudioCode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# Local History for Visual Studio Code
+.history/
+
+### VisualStudioCode Patch ###
+# Ignore all local history of files
+.history
+.ionide
+
+# Support for Project snippet scope
+!.vscode/*.code-snippets
+
+# End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,rust,c++
