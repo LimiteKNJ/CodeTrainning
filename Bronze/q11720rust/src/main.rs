@@ -1,12 +1,15 @@
-use std::io;
-
 fn main() {
-    let mut text = String::new();
-    io::stdin().read_line(&mut text).expect("Error");
-    let size : usize = text.trim().parse().expect("parse Err.");
+    let mut bf = String::new();
+    let stdin = std::io::stdin();
+    stdin.read_line(&mut bf).expect("Err");
+    let size : usize = bf.trim().parse().expect("Err");
 
-    for i in 0..size{
-        let mut temp = [0 ; 1];
-        
-   }
+    let mut bf2 = String::new();
+    stdin.read_line(&mut bf2).expect("Err");
+    let num : Vec<char> = bf2.chars().collect::<Vec<_>>();
+
+    let mut sum = 0;
+    for i in 0..size {
+        sum += num[i].to_digit(10).expect("Err");
+    } print!("{}", sum);
 }
