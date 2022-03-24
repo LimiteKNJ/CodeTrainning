@@ -6,8 +6,8 @@ fn main() {
                             .collect::<Vec<_>>();
     
     if !(num.len() < 3) {
-        let result = (( num[2] - num[1] ) / ( num[0] - num[1] ));
-        println!("{}", result);
+        let result = (( num[2] - num[1] ) as f64 / ( num[0] - num[1] ) as f64).ceil();
+        println!("{}", result as usize);
     } else { panic! {"out of Bound"};}
 }
 
