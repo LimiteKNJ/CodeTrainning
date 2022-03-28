@@ -1,5 +1,7 @@
+use std::collections::VecDeque;
+
 fn main() {
-    let mut stack : Vec<usize>  = Vec::new();
+    let mut queue : VecDeque<usize>  = VecDeque::new();
 
     let mut bf = String::new();
     let stdin = std::io::stdin();
@@ -16,23 +18,27 @@ fn main() {
         if !(exe_cmd.len() < 1) {
             if exe_cmd[0].eq("push") {
                 if !(exe_cmd.len() < 2){
-                    stack.push(exe_cmd[1].parse::<usize>().expect("Err"));
+                    queue.push_back(exe_cmd[1].parse::<usize>().expect("Err"));
                 } else { println!("Err") }
 
             } else if exe_cmd[0].eq("pop") {
-                if stack.is_empty() { println!("-1") } else {
-                    println!("{}", stack.pop().expect("Err"));
+                if queue.is_empty() { println!("-1") } else {
+                    println!("{}", queue.pop_front().expect("Err"));
                 }
 
             } else if exe_cmd[0].eq("size") {
-                println!("{}", stack.len());
+                println!("{}", queue.len());
 
             } else if exe_cmd[0].eq("empty") {
-                if stack.is_empty() { println!("1") } else { println!("0") }
+                if queue.is_empty() { println!("1") } else { println!("0") }
 
-            } else if exe_cmd[0].eq("top") {
-                if stack.is_empty() { println!("-1")} else {
-                    println!("{}", stack[stack.len() - 1]);
+            } else if exe_cmd[0].eq("front") {
+                if queue.is_empty() { println!("-1")} else {
+                    println!("{}", queue[0]);
+                }
+            } else if exe_cmd[0].eq("back") {
+                if queue.is_empty() { println!("-1")} else {
+                    println!("{}", queue[queue.len() - 1]);
                 }
             } else {
                 println!("Err.");
