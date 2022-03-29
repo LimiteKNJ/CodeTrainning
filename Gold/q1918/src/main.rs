@@ -6,7 +6,6 @@ fn main() {
 
 //  a*b+(c+d) = ab*cd++
     let mut op : Vec<char> = Vec::new();
-    let mut p_open = 0;
 
     for i in 0..infix.len(){
         if infix[i].is_alphabetic() {
@@ -14,32 +13,27 @@ fn main() {
 
         } else if infix[i] == '(' {
             op.push('|');
-            p_open += 1;
 
         } else if infix[i] == '*' || infix[i] == '/' {
-            op.push(infix[i]);
+            if !op.is_empty() {
+                if op[op.len()-1] == '*' || op[op.len()-1] == '/' {
+                    postfix.push(op.pop().expect("Err"));
+                }
+            } op.push(infix[i]);
 
         } else if infix[i] == '+' || infix[i] == '-' {
-            if p_open == 0 {
-                while !op.is_empty() {
-                    postfix.push(op.pop().expect("Err"));
-                } op.push(infix[i]);
-            } else {
-                op.push(infix[i]);
-            }
+            while !op.is_empty() && op[op.len()-1] != '|' {
+                postfix.push(op.pop().expect("Err"));
+            } op.push(infix[i]);
             
         } else if infix[i] == ')' {
-            if p_open >= 1 {
-                while op[op.len()-1] != '|' {
-                    postfix.push(op.pop().expect("Err"))
-                } op.pop().expect("Err"); p_open -= 1;
-            } else { println!("Not Open!") }
+            while op[op.len()-1] != '|' {
+                postfix.push(op.pop().expect("Err"))
+            } op.pop().expect("Err");
 
         } else {
             print!("err");
         }
-
-        println!("{:?}", op);
     }
 
     for _ in 0..op.len(){
