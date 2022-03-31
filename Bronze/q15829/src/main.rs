@@ -14,8 +14,8 @@ fn main() {
     let mut multiple = 1;
     let mut hash = 0;
     for i in 0..key.len() {
-        hash += (key[i] as u128 - 'a' as u128 + 1) * multiple;
-        multiple.overflowing_mul(multiple * 31);
+        hash = ( hash + (key[i] as u128 - 'a' as u128 + 1) * multiple ) % 1234567891;
+        multiple = multiple * 31 % 1234567891;
     } 
     writeln!(out, "{}", hash);
 }
