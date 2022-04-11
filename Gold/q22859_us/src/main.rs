@@ -52,16 +52,16 @@ fn main() {
 
 */
 
-
 /*  Solving read Char to Run */ // Time OUT!
-
+/* 
 use std::io;
 use io::Write;
 
 fn main() {
     let mut bf = String::new();
     std::io::stdin().read_line(&mut bf).expect("Err");
-    let html = bf.trim().chars().collect::<Vec<char>>();
+    let html = bf.trim().chars().collect::<Vec<_>>();
+    bf.clear();
 
     let stdout = io::stdout();
     let mut out = io::BufWriter::new(stdout.lock());
@@ -189,10 +189,10 @@ fn p(str : String) -> String {
     return result;
 }
 
+*/
 
 
-
-/* Previous Codes :: My Code
+// Previous Codes :: My Code
 
 const NULL : usize = 0;
 const OPEN_HTML : usize = 101;
@@ -344,7 +344,6 @@ fn main() {
         // HTML TAG
 
         if !stack.is_empty() && trg == true {
-            println!("{:?}", stack);
             match stack[stack.len()-1] {
 
                 OPEN_HTML => html = true,
@@ -419,4 +418,4 @@ fn main() {
     }
 }
 
- */
+ 

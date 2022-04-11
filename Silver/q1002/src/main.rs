@@ -1,4 +1,5 @@
 fn main() {
+    
     let mut bf = String::new();
     std::io::stdin().read_line(&mut bf).expect("Err");
     let case : usize = bf.trim().parse().expect("Err");
@@ -25,7 +26,7 @@ fn main() {
 
         } else { panic!{"out of bound"} }
     }
-
+    
     for i in 0..result.len() {
         println!("{}", result[i]);
     }
