@@ -1,7 +1,7 @@
 /* Dijkstra Algorithm Practice */
 // Priority Queue + BinaryHeap Tree
 
-use std::io::{Read, Write, BufWriter, self};
+use std::io::{Write, BufWriter, self};
 use std::cmp::Ordering;
 use std::collections::BinaryHeap;
 
@@ -30,7 +30,7 @@ struct Edge {
     cost: usize,
 }
 
-fn shortest_path(adj_list: &Vec<Vec<Edge>>, start: usize, goal: usize) -> Option<usize> {
+fn shortest_path(adj_list: &Vec<Vec<Edge>>, start: usize, goal: usize) {
 
     let mut dist: Vec<_> = (0..adj_list.len()).map(|_| usize::MAX).collect();
     let mut heap = BinaryHeap::new();
@@ -40,7 +40,7 @@ fn shortest_path(adj_list: &Vec<Vec<Edge>>, start: usize, goal: usize) -> Option
 
     while let Some(State { cost, position }) = heap.pop() {
 
-        if position == goal { return Some(cost); }
+        if position == goal { print_cost(Some(cost)); }
         if cost > dist[position] { continue; }
 
         for edge in &adj_list[position] {
@@ -52,16 +52,22 @@ fn shortest_path(adj_list: &Vec<Vec<Edge>>, start: usize, goal: usize) -> Option
             }
         }
     }
+}
 
-    None
+fn print_cost (n :Option<usize>) {
+    let stdout = io::stdout();
+    let mut out = BufWriter::new(stdout.lock());
+
+    match n {
+        Some(i) => write!(out, "{}", i).unwrap(),
+        None => write!(out, "INF").unwrap()
+    }
+    
 }
 
 fn main() {
 
-    let stdout = std::io::stdout();
-    let stdin = std::io::stdin();
-    let mut out = io::BufWriter::new(stdout.lock());
-
+    let stdin = io::stdin();
     let mut buf = String::new();
     stdin.read_line(&mut buf).unwrap();
     let v_cnt = buf.trim().parse::<usize>().unwrap();
@@ -94,9 +100,5 @@ fn main() {
         graph[n.0].push(Edge { node: n.1, cost: n.2 } );
     }
 
-    let result = shortest_path(&graph, start_k, end_k);
-    match result {
-        Some(x) => writeln!(out, "{}", x).unwrap(),
-        None => writeln!(out, "INF").unwrap()
-    }
+    shortest_path(&graph, start_k, end_k);
 }
