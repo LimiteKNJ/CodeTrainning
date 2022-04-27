@@ -1,35 +1,29 @@
 use std::io;
-use io::Write;
+use std::fmt::Write;
 
-fn permutation(vec : &mut Vec<usize>, temp : &mut Vec<usize>, visited : &mut Vec<bool>, n : usize, r : usize) {
+fn permutation(vec : &mut Vec<usize>, temp : &mut Vec<usize>, visited : &mut Vec<bool>, n : usize, r : usize, out : &mut String) {
 
     if r == temp.len() {
-        let stdout = std::io::stdout();
-        let mut out = io::BufWriter::new(stdout.lock());
-        let mut result = String::new();
-
         for i in 0..temp.len() {
-            result.push_str(&(temp[i].to_string() + " "));
-        } result.push_str("\n");
-        write!(out, "{}", result).unwrap();
+            write!(out, "{} ", temp[i]).unwrap();
+        } write!(out,"\n").unwrap();
         return;
     }
 
     for i in 0..n {
-        if !visited[i] {
-            visited[i] = true;
-            temp[r] = vec[i];
-            permutation(vec, temp, visited, n, r+1);
-            visited[i] = false;
-        }
+        if visited[i] { continue; }
+        visited[i] = true;
+        temp[r] = vec[i];
+        permutation(vec, temp, visited, n, r+1, out);
+        visited[i] = false;
     }
-
 }
-
 fn main() {
 
-    let stdin = std::io::stdin();
+    let stdin = io::stdin();
     let mut buf = String::new();
+    let mut buf_out = String::new();
+
     stdin.read_line(&mut buf).unwrap();
     let mut iter = buf.split_whitespace();
     let n = iter.next().unwrap().trim().parse::<usize>().unwrap();
@@ -37,8 +31,9 @@ fn main() {
     buf.clear();
 
     let mut vec : Vec<usize> = (1..=n).collect();
-    let mut temp : Vec<usize> = vec![0; r];
     let mut visited : Vec<bool> = vec![false; n];
+    let mut temp : Vec<usize> = vec![0; r];
 
-    permutation(&mut vec, &mut temp, &mut visited, n, 0);
+    permutation(&mut vec, &mut temp, &mut visited, n, 0, &mut buf_out);
+    print!("{}", buf_out);
 }

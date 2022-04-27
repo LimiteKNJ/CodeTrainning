@@ -1,30 +1,27 @@
 use std::io;
-use io::Write;
+use std::fmt::Write;
 
-fn permutation(vec : &mut Vec<usize>, temp : &mut Vec<usize>, n : usize, r : usize) {
+fn permutation(vec : &mut Vec<usize>, temp : &mut Vec<usize>, n : usize, r : usize, out : &mut String) {
 
     if r == temp.len() {
-        let stdout = std::io::stdout();
-        let mut out = io::BufWriter::new(stdout.lock());
-        let mut result = String::new();
-
         for i in 0..temp.len() {
-            result.push_str(&(temp[i].to_string() + " "));
-        } result.push_str("\n");
-        write!(out, "{}", result).unwrap();
+            write!(out, "{}", temp[i]).unwrap();
+        } write!(out, "\n").unwrap();
         return;
     }
 
     for i in 0..n {
-            temp[r] = vec[i];
-            permutation(vec, temp, n, r+1);
+        temp[r] = vec[i];
+        permutation(vec, temp, n, r+1, out);
     }
 }
 
 fn main() {
 
-    let stdin = std::io::stdin();
+    let stdin = io::stdin();
     let mut buf = String::new();
+    let mut out_buf = String::new();
+
     stdin.read_line(&mut buf).unwrap();
     let mut iter = buf.split_whitespace();
     let n = iter.next().unwrap().trim().parse::<usize>().unwrap();
@@ -34,5 +31,6 @@ fn main() {
     let mut vec : Vec<usize> = (1..=n).collect();
     let mut temp : Vec<usize> = vec![0; r];
 
-    permutation(&mut vec, &mut temp, n, 0);
+    permutation(&mut vec, &mut temp, n, 0, &mut out_buf);
+    print!("{}",out_buf);
 }
