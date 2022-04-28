@@ -1,7 +1,7 @@
 use std::io;
 use std::fmt::Write;
 
-fn permutation(vec : &mut Vec<usize>, temp : &mut Vec<usize>, n : usize, r : usize, out : &mut String) {
+fn permutation(vec : &mut Vec<usize>, temp : &mut Vec<usize>, visited : &mut Vec<bool>, n : usize, r : usize, out : &mut String) {
 
     if r == temp.len() {
         for i in 0..temp.len() {
@@ -10,9 +10,14 @@ fn permutation(vec : &mut Vec<usize>, temp : &mut Vec<usize>, n : usize, r : usi
         return;
     }
 
+    let mut _priv = 0;
     for i in 0..n {
-            temp[r] = vec[i];
-            permutation(vec, temp, n, r+1, out);
+        if visited[i] || vec[i] == _priv { continue; }
+        visited[i] = true;
+        temp[r] = vec[i];
+        _priv = temp[r];
+        permutation(vec, temp, visited, n, r+1, out);
+        visited[i] = false;
     }
 }
 
@@ -33,8 +38,9 @@ fn main() {
                                 .map(|s|s.trim().parse::<usize>().unwrap())
                                 .collect::<Vec<_>>();
     let mut temp : Vec<usize> = vec![0; r];
+    let mut visited : Vec<bool> = vec![false; n];
     vec.sort();
 
-    permutation(&mut vec, &mut temp, n, 0, &mut out);
+    permutation(&mut vec, &mut temp, &mut visited, n, 0, &mut out);
     print!("{}", out);
 }
