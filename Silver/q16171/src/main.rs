@@ -1,4 +1,4 @@
-use std::io::{Read, Write, BufWriter, self};
+use std::io::{Write, BufWriter, self};
 
 fn main() {
 
